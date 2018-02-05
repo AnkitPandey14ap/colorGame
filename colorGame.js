@@ -1,11 +1,17 @@
 
-var colors=generateColors(6);
+// var colors=generateColors(6);
+var colors=[];
 var numOfSqrs=6;
+var squares;
 
 var colorDisplay=document.querySelector("#colorDisplay");
-var pickedColor=pickColor(6);
+
+// var pickedColor=pickColor(6);
+var pickedColor;
+
 var resultDisplay=document.querySelector("#resultDisplay");
-colorDisplay.textContent=pickedColor;
+
+// colorDisplay.textContent=pickedColor;
 
 var resetBtn=document.querySelector("#reset");
 /*var easyBtn=document.querySelector("#easyBtn");
@@ -15,51 +21,54 @@ var hardBtn=document.querySelector("#hardBtn");
 init();
 
 function init(){
+	var modeButtons=document.querySelectorAll(".mode");
+	for (var i = 0; i < modeButtons.length; i++) {
+		modeButtons[i].addEventListener("click",function(){
+			modeButtons[0].classList.remove("selected");
+			modeButtons[1].classList.remove("selected");
+			if(this.textContent==="Easy"){
+				numOfSqrs=3;
+			}else
+				numOfSqrs=6;
+
+			reset();	
+			this.classList.add("selected");
+		});
+
+	}
+
+	squares=document.querySelectorAll(".square");
+	for (var i = 0; i<squares.length; i++) {
+		squares[i].style.background=colors[i];
+
+		squares[i].addEventListener("click",function(){
+			var clickedColor=this.style.background;
+			console.log(clickedColor+colors[3]);
+			if(clickedColor==pickedColor){
+				changeColor(pickedColor);
+				resultDisplay.textContent="Correct!"
+				document.querySelector("h1").style.background=clickedColor;
+				resetBtn.textContent="Play Again?"
+
+			
+			}else{
+				this.style.background="#232323";
+				resultDisplay.textContent="Try again";
+			
+				/*console.log(clickedColor+" "+pickedColor);*/
+			}
+		});
+	}
+	reset();
 
 }
 
 
-var modeButtons=document.querySelectorAll(".mode");
-for (var i = 0; i < modeButtons.length; i++) {
-	modeButtons[i].addEventListener("click",function(){
-		modeButtons[0].classList.remove("selected");
-		modeButtons[1].classList.remove("selected");
-		if(this.textContent==="Easy"){
-			numOfSqrs=3;
-		}else
-			numOfSqrs=6;
-
-		reset();	
-		this.classList.add("selected");
-	});
-
-}
 
 resetBtn.addEventListener("click",reset);
 
 
-var squares=document.querySelectorAll(".square");
-for (var i = 0; i<squares.length; i++) {
-	squares[i].style.background=colors[i];
 
-	squares[i].addEventListener("click",function(){
-		var clickedColor=this.style.background;
-		console.log(clickedColor+colors[3]);
-		if(clickedColor==pickedColor){
-			changeColor(pickedColor);
-			resultDisplay.textContent="Correct!"
-			document.querySelector("h1").style.background=clickedColor;
-			resetBtn.textContent="Play Again?"
-
-			
-		}else{
-			this.style.background="#232323";
-			resultDisplay.textContent="Try again";
-			
-			/*console.log(clickedColor+" "+pickedColor);*/
-		}
-	});
-}
 hardBtn.classList.add("selected");
 
 function changeColor(color){
